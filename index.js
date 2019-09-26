@@ -33,7 +33,21 @@ yargs.command({
 yargs.command({
   command: 'remove',
   describe: 'remove a note',
-  handler: () => console.log('Removing note!')
+  builder: {
+    title: {
+      describe: 'what is the note title you want to remove?',
+      demandOption: true,
+      type: 'string'
+    },
+    path: {
+      describe: 'where is the notebook you want to delete?',
+      demandOption: true,
+      type: 'string'
+    }
+  },
+  handler: argv => {
+    note.removeNote(argv.title, argv.path);
+  }
 });
 
 // create list command
