@@ -1,3 +1,6 @@
 #node
 node_modules/
 .playground/
+
+#custom
+notes/json/
