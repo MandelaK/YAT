@@ -54,7 +54,15 @@ yargs.command({
 yargs.command({
   command: 'list',
   describe: 'return a list of notes',
-  handler: () => console.log('Here are your notes!')
+  builder: {
+    path: {
+      describe: 'where are your notes located?',
+      type: 'string'
+    }
+  },
+  handler: argv => {
+    note.listNotes(argv.path);
+  }
 });
 
 // create read command

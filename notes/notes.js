@@ -65,8 +65,22 @@ const loadNotes = path => {
   }
 };
 
+const listNotes = (path = 'notes.json') => {
+  notesDir = `${NOTES_DIR}/${path}`;
+  notes = loadNotes(notesDir);
+  if (notes.length > 1) {
+    console.log(chalk.inverse('Below are your notes:'));
+    notes.forEach(note => {
+      console.log(note.title);
+    });
+  } else {
+    console.log(chalk.red.inverse(`No notes found in ${notesDir}`));
+  }
+};
+
 module.exports = {
   getNotes,
   addNote,
-  removeNote
+  removeNote,
+  listNotes
 };
