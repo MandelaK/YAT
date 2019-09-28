@@ -85,4 +85,33 @@ yargs.command({
   }
 });
 
+// create update command
+yargs.command({
+  command: 'update',
+  describe: 'update a note',
+  builder: {
+    title: {
+      describe: 'current title of the note you want to update',
+      demandOption: true,
+      type: 'string'
+    },
+    path: {
+      describe: 'path of the target note',
+      type: 'string'
+    },
+    body: {
+      describe: 'new body of the note',
+      demandOption: true,
+      type: 'string'
+    },
+    overwrite: {
+      describe: 'overwrite old body completely',
+      type: 'boolean'
+    }
+  },
+  handler: argv => {
+    note.updateNote(argv.body, argv.title, argv.path, argv.overwrite);
+  }
+});
+
 yargs.parse();
