@@ -11,11 +11,9 @@ const addNote = (title, body, path = 'notes.json') => {
   const notesDir = `${NOTES_DIR}/${path}`;
   const fileNotes = loadNotes(notesDir);
   // filter out notes with duplicate titles
-  const duplicateNotes = fileNotes.filter(singleNote => {
-    return singleNote.title === title;
-  });
+  const duplicateNote = fileNotes.find(note => note.title === title);
 
-  if (duplicateNotes.length === 0) {
+  if (!duplicateNote) {
     fileNotes.push({
       title,
       body
@@ -31,9 +29,7 @@ const addNote = (title, body, path = 'notes.json') => {
 const removeNote = (title, path) => {
   const notesDir = `${NOTES_DIR}/${path}`;
   const allNotes = loadNotes(notesDir);
-  const targetNotes = allNotes.filter(note => {
-    return note.title !== title;
-  });
+  const targetNotes = allNotes.filter(note => note.title !== title);
 
   if (targetNotes.length > 0) {
     saveNotes(targetNotes, notesDir);
@@ -78,9 +74,26 @@ const listNotes = (path = 'notes.json') => {
   }
 };
 
+const readNote = (title, path = 'notes.json') => {
+  notesDir = `${NOTES_DIR}/${path}`;
+  notes = loadNotes(notesDir);
+
+  targetNote = notes.find(note => note.title === title);
+
+  if (targetNote) {
+    console.log(chalk.inverse(`Title: ${title}`));
+    console.log(targetNote.body);
+  } else {
+    console.log(
+      chalk.red.inverse(`There is no note titled ${title} in ${notesDir}`)
+    );
+  }
+};
+
 module.exports = {
   getNotes,
   addNote,
   removeNote,
-  listNotes
+  listNotes,
+  readNote
 };
